@@ -28,5 +28,4 @@ public class CheckBusStop {
 
     @Column(nullable = false)
     private LocalDateTime timeCheck;
-
 }
