@@ -11,20 +11,18 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Valida_Onibus_Parada")
+@Table(name = "validaOnibusParada")
 public class CheckBusStop {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "id_bus",nullable = false)
-    private Bus bus;
+    @Column
+    private Long bus_id;
 
-    @OneToOne
-    @JoinColumn(name = "id_busStope",nullable = false)
-    private BusStop busStop;
+    @Column
+    private Long busStop_id;
 
     @Column(nullable = false)
     private LocalDateTime timeCheck;

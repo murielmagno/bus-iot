@@ -9,16 +9,20 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "Onibus")
+@Entity
+@Table(name = "bus")
 public class Bus {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
+
     @Column
     private String name;
+
     @Column
     private int busNumber;
+
     @Column
     private String route;
 }
