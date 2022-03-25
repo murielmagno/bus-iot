@@ -1,9 +1,8 @@
 package br.com.muriel.busIOT.rest.service;
 
 import br.com.muriel.busIOT.rest.dto.BusDTO;
-import br.com.muriel.busIOT.rest.exception.BusAlreadyRegisteredException;
-import br.com.muriel.busIOT.rest.exception.BusNotFoundException;
-import br.com.muriel.busIOT.rest.exception.BusStopAlreadyRegisteredException;
+import br.com.muriel.busIOT.rest.exception.bus.BusAlreadyRegisteredException;
+import br.com.muriel.busIOT.rest.exception.bus.BusNotFoundException;
 import br.com.muriel.busIOT.rest.model.entity.Bus;
 import br.com.muriel.busIOT.rest.model.repository.BusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,6 @@ public class BusService {
     public Bus save(BusDTO dto) throws BusAlreadyRegisteredException{
         verifyIfIsAlreadyRegistered(dto.getName());
         Bus bus = new Bus();
-        bus.getId();
         bus.setName(dto.getName());
         bus.setRoute(dto.getRoute());
         bus.setBusNumber(dto.getBusNumber());

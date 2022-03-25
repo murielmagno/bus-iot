@@ -12,5 +12,6 @@ public class CheckBusStopDTO {
     private Long id;
     private Long bus_id;
     private Long busStop_id;
+    @JsonIgnore
     private LocalDateTime timeCheck;
 }

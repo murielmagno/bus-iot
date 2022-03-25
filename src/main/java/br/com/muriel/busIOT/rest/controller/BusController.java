@@ -1,8 +1,8 @@
 package br.com.muriel.busIOT.rest.controller;
 
 import br.com.muriel.busIOT.rest.dto.BusDTO;
-import br.com.muriel.busIOT.rest.exception.BusAlreadyRegisteredException;
-import br.com.muriel.busIOT.rest.exception.BusNotFoundException;
+import br.com.muriel.busIOT.rest.exception.bus.BusAlreadyRegisteredException;
+import br.com.muriel.busIOT.rest.exception.bus.BusNotFoundException;
 import br.com.muriel.busIOT.rest.model.entity.Bus;
 import br.com.muriel.busIOT.rest.service.BusService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,8 +24,7 @@ public class BusController {
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Criar um buzão!")
     public ResponseEntity<Bus> save(@RequestBody BusDTO dto) throws BusAlreadyRegisteredException {
-        Bus bus = busService.save(dto);
-        return ResponseEntity.status(201).body((bus));
+        return ResponseEntity.status(201).body(busService.save(dto));
     }
 
     @GetMapping("{id}")

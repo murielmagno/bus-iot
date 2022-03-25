@@ -1,4 +1,4 @@
-package br.com.muriel.busIOT.rest.exception;
+package br.com.muriel.busIOT.rest.exception.bus;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

@@ -1,5 +1,6 @@
 package br.com.muriel.busIOT.rest.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 public class CheckBusStop {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
@@ -24,6 +25,6 @@ public class CheckBusStop {
     @Column
     private Long busStop_id;
 
-    @Column(nullable = false)
+    @Column
     private LocalDateTime timeCheck;
 }

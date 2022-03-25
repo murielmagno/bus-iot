@@ -1,12 +1,18 @@
 package br.com.muriel.busIOT.rest.service;
 
 import br.com.muriel.busIOT.rest.dto.BusStopDTO;
-import br.com.muriel.busIOT.rest.exception.BusStopAlreadyRegisteredException;
-import br.com.muriel.busIOT.rest.exception.BusStopNotFoundException;
+import br.com.muriel.busIOT.rest.exception.busStop.NotFoundBusStopNext;
+import br.com.muriel.busIOT.rest.exception.busStop.BusStopAlreadyRegisteredException;
+import br.com.muriel.busIOT.rest.exception.busStop.BusStopNotFoundException;
+import br.com.muriel.busIOT.rest.model.entity.Bus;
 import br.com.muriel.busIOT.rest.model.entity.BusStop;
 import br.com.muriel.busIOT.rest.model.repository.BusStopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class BusStopService {
@@ -39,5 +45,26 @@ public class BusStopService {
     private BusStop verifyIfExists(Long id) throws BusStopNotFoundException {
         return busStopRepository.findById(id)
                 .orElseThrow(() -> new BusStopNotFoundException(id));
+    }
+
+    public List<Bus> nextBus(Long id) throws BusStopNotFoundException, NotFoundBusStopNext {
+        List<BusStop> busStops = backDistance(id);
+
+        return new ArrayList<>();
+    }
+
+    private List<BusStop> backDistance(Long id) throws NotFoundBusStopNext, BusStopNotFoundException {
+        BusStop busStop = busStopRepository.findById(id).orElseThrow(() -> new BusStopNotFoundException(id));
+        List<BusStop> listBusStop = busStopRepository.findAll();
+
+        if (listBusStop.isEmpty()) {
+            throw new NotFoundBusStopNext(id);
+        }
+        return listBusStop;
+
+    }
+
+    private void nextDistance(){
+
     }
 }
