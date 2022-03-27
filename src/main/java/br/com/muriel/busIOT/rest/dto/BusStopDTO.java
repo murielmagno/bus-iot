@@ -12,7 +12,7 @@ public class BusStopDTO {
     @JsonIgnore
     private Long id;
     private String name;
-    private BigDecimal latitude;
-    private BigDecimal longitude;
+    private double latitude;
+    private double longitude;
     private Direction direction;
 }

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @NoArgsConstructor
@@ -35,4 +36,17 @@ public class Bus {
             joinColumns={@JoinColumn(name="bus_id")},
             inverseJoinColumns={@JoinColumn(name="busStop_id")})
     private List<BusStop> busStop;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Bus bus = (Bus) o;
+        return busNumber == bus.busNumber && Objects.equals(id, bus.id) && Objects.equals(name, bus.name) && Objects.equals(route, bus.route) && Objects.equals(busStop, bus.busStop);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, busNumber, route, busStop);
+    }
 }

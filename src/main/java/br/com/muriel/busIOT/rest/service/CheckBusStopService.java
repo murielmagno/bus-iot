@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
 
 @Service
 public class CheckBusStopService {
@@ -33,6 +34,13 @@ public class CheckBusStopService {
         checkBusStop.setBus_id(checkBusStopDTO.getBus_id());
         checkBusStop.setTimeCheck(LocalDateTime.now(Clock.system(ZoneId.of("America/Fortaleza"))));
         return checkBusStopRepository.save(checkBusStop);
+    }
+
+    public List<CheckBusStop> nextBusInCheck(Long id){
+
+        return checkBusStopRepository.findBusByStop(id);
+
+
     }
 
 }

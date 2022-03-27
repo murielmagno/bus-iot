@@ -5,11 +5,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.engine.spi.Mapping;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @NoArgsConstructor
@@ -27,10 +26,10 @@ public class BusStop {
     private String name;
 
     @Column(precision=17, scale=14)
-    private BigDecimal latitude;
+    private double latitude;
 
     @Column(precision=17, scale=14)
-    private BigDecimal longitude;
+    private double longitude;
 
     @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false)
@@ -39,4 +38,17 @@ public class BusStop {
     @JsonIgnore
     @ManyToMany(mappedBy ="busStop",cascade = CascadeType.ALL)
     private List<Bus> bus;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BusStop busStop = (BusStop) o;
+        return Double.compare(busStop.latitude, latitude) == 0 && Double.compare(busStop.longitude, longitude) == 0 && Objects.equals(id, busStop.id) && Objects.equals(name, busStop.name) && direction == busStop.direction && Objects.equals(bus, busStop.bus);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, latitude, longitude, direction, bus);
+    }
 }

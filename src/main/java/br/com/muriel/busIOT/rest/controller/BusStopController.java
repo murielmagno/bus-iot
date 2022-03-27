@@ -6,6 +6,7 @@ import br.com.muriel.busIOT.rest.exception.busStop.BusStopNotFoundException;
 import br.com.muriel.busIOT.rest.exception.busStop.NotFoundBusStopNext;
 import br.com.muriel.busIOT.rest.model.entity.Bus;
 import br.com.muriel.busIOT.rest.model.entity.BusStop;
+import br.com.muriel.busIOT.rest.model.entity.CheckBusStop;
 import br.com.muriel.busIOT.rest.service.BusStopService;
 import br.com.muriel.busIOT.rest.service.CheckBusStopService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/busstop")
@@ -37,7 +39,7 @@ public class BusStopController {
     @GetMapping("/nextBuses/{id}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Busccar paradas proximas")
-    public ResponseEntity<List<Bus>> nextBuses(@PathVariable("id") Long id) throws BusStopNotFoundException, NotFoundBusStopNext {
+    public ResponseEntity<Map<CheckBusStop,Bus>> nextBuses(@PathVariable("id") Long id) throws BusStopNotFoundException, NotFoundBusStopNext {
         return ResponseEntity.status(200).body(busStopService.nextBus(id));
     }
 }

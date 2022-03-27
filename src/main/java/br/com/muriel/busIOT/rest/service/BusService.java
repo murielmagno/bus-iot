@@ -8,6 +8,8 @@ import br.com.muriel.busIOT.rest.model.repository.BusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class BusService {
 
@@ -26,6 +28,10 @@ public class BusService {
 
     public Bus getById(Long id) throws BusNotFoundException {
         return verifyIfExists(id);
+    }
+
+    public List<Bus> findAll(){
+        return busRepository.findAll();
     }
 
     private void verifyIfIsAlreadyRegistered(String name) throws BusAlreadyRegisteredException {
