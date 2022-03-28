@@ -30,23 +30,23 @@ public class Bus {
     @Column
     private String route;
 
-    @JsonIgnore
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="bus_busStops",
-            joinColumns={@JoinColumn(name="bus_id")},
-            inverseJoinColumns={@JoinColumn(name="busStop_id")})
-    private List<BusStop> busStop;
+//    @JsonIgnore
+//    @ManyToMany(cascade = CascadeType.ALL)
+//    @JoinTable(name="bus_busStops",
+//            joinColumns={@JoinColumn(name="bus_id")},
+//            inverseJoinColumns={@JoinColumn(name="busStop_id")})
+//    private List<BusStop> busStop;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Bus bus = (Bus) o;
-        return busNumber == bus.busNumber && Objects.equals(id, bus.id) && Objects.equals(name, bus.name) && Objects.equals(route, bus.route) && Objects.equals(busStop, bus.busStop);
+        return busNumber == bus.busNumber && Objects.equals(id, bus.id) && Objects.equals(name, bus.name) && Objects.equals(route, bus.route);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, busNumber, route, busStop);
+        return Objects.hash(id, name, busNumber, route);
     }
 }

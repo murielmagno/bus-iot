@@ -36,9 +36,9 @@ public class CheckBusStopService {
         return checkBusStopRepository.save(checkBusStop);
     }
 
-    public List<CheckBusStop> nextBusInCheck(Long id){
+    public List<CheckBusStop> nextBusInCheck(){
 
-        return checkBusStopRepository.findBusByStop(id);
+        return checkBusStopRepository.findBusByStop();
 
 
     }

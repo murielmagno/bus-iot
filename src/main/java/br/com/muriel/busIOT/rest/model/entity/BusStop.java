@@ -35,20 +35,20 @@ public class BusStop {
     @Column(nullable = false)
     private Direction direction;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy ="busStop",cascade = CascadeType.ALL)
-    private List<Bus> bus;
+//    @JsonIgnore
+//    @ManyToMany(mappedBy ="busStop",cascade = CascadeType.ALL)
+//    private List<Bus> bus;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BusStop busStop = (BusStop) o;
-        return Double.compare(busStop.latitude, latitude) == 0 && Double.compare(busStop.longitude, longitude) == 0 && Objects.equals(id, busStop.id) && Objects.equals(name, busStop.name) && direction == busStop.direction && Objects.equals(bus, busStop.bus);
+        return Double.compare(busStop.latitude, latitude) == 0 && Double.compare(busStop.longitude, longitude) == 0 && Objects.equals(id, busStop.id) && Objects.equals(name, busStop.name) && direction == busStop.direction;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, latitude, longitude, direction, bus);
+        return Objects.hash(id, name, latitude, longitude, direction);
     }
 }

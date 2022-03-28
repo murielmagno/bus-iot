@@ -9,7 +9,6 @@ import br.com.muriel.busIOT.rest.model.entity.BusStop;
 import br.com.muriel.busIOT.rest.model.entity.CheckBusStop;
 import br.com.muriel.busIOT.rest.model.repository.BusStopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -53,21 +52,21 @@ public class BusStopService {
                 .orElseThrow(() -> new BusStopNotFoundException(id));
     }
 
-    public Map<CheckBusStop, Bus> nextBus(Long id) throws BusStopNotFoundException, NotFoundBusStopNext {
-        Map<Long, Double> busStops = backDistance(id);
+    public Map<Bus, Double> nextBus(Long id) throws BusStopNotFoundException, NotFoundBusStopNext {
+        List<CheckBusStop> listBusCheck = checkBusStopService.nextBusInCheck();
         List<Bus> listBus = findAllBus();
-        List<CheckBusStop> listBusCheck = checkBusStopService.nextBusInCheck(id);
-        Map<CheckBusStop,Bus> mapCheckBus = new HashMap<>();
+        Map<Bus,Double> mapCheckBus = new HashMap<>();
         if(listBusCheck != null && !listBusCheck.isEmpty()){
             for (CheckBusStop obj : listBusCheck) {
                 for (Bus bus: listBus) {
-                    mapCheckBus.put(obj,bus);
+                    Map<Long, Double> busStops = backDistance(id);
+                    mapCheckBus.put(bus,busStops.get(obj.getBusStop_id()));
                 }
             }
         }return mapCheckBus;
     }
 
-    private Map<Long, Double> backDistance(Long id) throws NotFoundBusStopNext, BusStopNotFoundException {
+    private Map<Long, Double> backDistance(Long id) throws BusStopNotFoundException {
         BusStop busStop = busStopRepository.findById(id).orElseThrow(() -> new BusStopNotFoundException(id));
         List<BusStop> listBusStop = busStopRepository.findAll();
         Map<Long,Double> map = new HashMap<>();

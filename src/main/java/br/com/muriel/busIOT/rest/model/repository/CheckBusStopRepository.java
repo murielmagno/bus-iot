@@ -12,6 +12,6 @@ public interface CheckBusStopRepository extends JpaRepository<CheckBusStop,Long>
     CheckBusStop findByIdBus (Long id);
 
 
-    @Query(value="select * from check_bus_stop where bus_stop_id =?1", nativeQuery=true)
-    List<CheckBusStop> findBusByStop(Long id);
+    @Query(value="select * from check_bus_stop cbs order by cbs.time_check", nativeQuery=true)
+    List<CheckBusStop> findBusByStop();
 }
