@@ -52,17 +52,15 @@ public class BusStopService {
                 .orElseThrow(() -> new BusStopNotFoundException(id));
     }
 
-    public Map<Bus, Double> nextBus(Long id) throws BusStopNotFoundException, NotFoundBusStopNext {
+    public Map<Long, Double> nextBus(Long id) throws BusStopNotFoundException, NotFoundBusStopNext {
         List<CheckBusStop> listBusCheck = checkBusStopService.nextBusInCheck();
-        List<Bus> listBus = findAllBus();
-        Map<Bus,Double> mapCheckBus = new HashMap<>();
+        //List<Bus> listBus = findAllBus();
+        Map<Long, Double> mapCheckBus = new HashMap<>();
         if(listBusCheck != null && !listBusCheck.isEmpty()){
             for (CheckBusStop obj : listBusCheck) {
-                for (Bus bus: listBus) {
                     Map<Long, Double> busStops = backDistance(id);
-                    mapCheckBus.put(bus,busStops.get(obj.getBusStop_id()));
-                }
-            }
+                    mapCheckBus.put(obj.getBus_id(), busStops.get(obj.getBusStop_id()));
+            }return mapCheckBus;
         }return mapCheckBus;
     }
 
@@ -88,6 +86,10 @@ public class BusStopService {
 
     private List<Bus> findAllBus(){
         return busService.findAll();
+    }
+
+    private List<BusStop> findAllBusStop(){
+        return busStopRepository.findAll();
     }
     
     private void nextDistance(){
