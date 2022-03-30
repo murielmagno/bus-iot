@@ -54,7 +54,6 @@ public class BusStopService {
 
     public Map<Long, Double> nextBus(Long id) throws BusStopNotFoundException, NotFoundBusStopNext {
         List<CheckBusStop> listBusCheck = checkBusStopService.nextBusInCheck();
-        //List<Bus> listBus = findAllBus();
         Map<Long, Double> mapCheckBus = new HashMap<>();
         if(listBusCheck != null && !listBusCheck.isEmpty()){
             for (CheckBusStop obj : listBusCheck) {
