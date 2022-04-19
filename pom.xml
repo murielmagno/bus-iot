@@ -12,7 +12,7 @@
 	<artifactId>busIOT</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>busIOT</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Bus integration project</description>
 	<properties>
 		<java.version>11</java.version>
 		<jackson.version>2.13.2</jackson.version>
@@ -52,6 +52,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>io.springfox</groupId>

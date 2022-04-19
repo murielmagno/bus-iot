@@ -55,43 +55,40 @@ public class BusStopService {
     public Map<Long, Double> nextBus(Long id) throws BusStopNotFoundException, NotFoundBusStopNext {
         List<CheckBusStop> listBusCheck = checkBusStopService.nextBusInCheck();
         Map<Long, Double> mapCheckBus = new HashMap<>();
-        if(listBusCheck != null && !listBusCheck.isEmpty()){
+        if (listBusCheck != null && !listBusCheck.isEmpty()) {
             for (CheckBusStop obj : listBusCheck) {
-                    Map<Long, Double> busStops = backDistance(id);
-                    mapCheckBus.put(obj.getBus_id(), busStops.get(obj.getBusStop_id()));
-            }return mapCheckBus;
-        }return mapCheckBus;
+                Map<Long, Double> busStops = backDistance(id);
+                mapCheckBus.put(obj.getBus_id(), busStops.get(obj.getBusStop_id()));
+            }
+            return mapCheckBus;
+        }
+        return mapCheckBus;
     }
 
     private Map<Long, Double> backDistance(Long id) throws BusStopNotFoundException {
         BusStop busStop = busStopRepository.findById(id).orElseThrow(() -> new BusStopNotFoundException(id));
         List<BusStop> listBusStop = busStopRepository.findAll();
-        Map<Long,Double> map = new HashMap<>();
+        Map<Long, Double> map = new HashMap<>();
         double distancia;
-        if(listBusStop != null && !listBusStop.isEmpty()){
+        if (listBusStop != null && !listBusStop.isEmpty()) {
             for (BusStop obj : listBusStop) {
                 if (obj.getId() < busStop.getId() &&
-                        obj.getId()!=busStop.getId() &&
-                        busStop.getDirection() == obj.getDirection()){
+                        obj.getId() != busStop.getId() &&
+                        busStop.getDirection() == obj.getDirection()) {
                     distancia = Math.sqrt(
                             (Math.pow(obj.getLatitude() - busStop.getLatitude(), 2)) + (Math.pow(obj.getLongitude() - busStop.getLongitude(), 2)));
-                    map.put(obj.getId(),(distancia*100));
-                }else{
+                    map.put(obj.getId(), (distancia * 100));
+                } else {
                     continue;
                 }
-            }return map;
-        }return map;
+            }
+            return map;
+        }
+        return map;
     }
 
-    private List<Bus> findAllBus(){
-        return busService.findAll();
-    }
-
-    private List<BusStop> findAllBusStop(){
+    public List<BusStop> findAllBusStop() {
         return busStopRepository.findAll();
     }
-    
-    private void nextDistance(){
 
-    }
 }
