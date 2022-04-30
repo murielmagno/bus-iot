@@ -6,4 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface BusRepository extends JpaRepository<Bus,Long> {
 
     Bus findByName(String name);
+
+    Bus findByBusNumber(Integer busNumber);
 }

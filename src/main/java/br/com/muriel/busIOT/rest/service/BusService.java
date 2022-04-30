@@ -18,7 +18,8 @@ public class BusService {
 
 
     public Bus save(BusDTO dto) throws BusAlreadyRegisteredException{
-        verifyIfIsAlreadyRegistered(dto.getName());
+        verifyIfExistsBusName(dto.getName());
+        verifyIfExistsBusNumber(dto.getBusNumber());
         Bus bus = new Bus();
         bus.setName(dto.getName());
         bus.setRoute(dto.getRoute());
@@ -34,15 +35,22 @@ public class BusService {
         return busRepository.findAll();
     }
 
-    private void verifyIfIsAlreadyRegistered(String name) throws BusAlreadyRegisteredException {
-        Bus savedBusStop = busRepository.findByName(name);
-        if (savedBusStop != null) {
-            throw new BusAlreadyRegisteredException(name);
-        }
-    }
-
     private Bus verifyIfExists(Long id) throws BusNotFoundException {
         return busRepository.findById(id)
                 .orElseThrow(() -> new BusNotFoundException(id));
+    }
+
+    private void verifyIfExistsBusNumber (Integer busNumber) throws BusAlreadyRegisteredException {
+        Bus savedBus = busRepository.findByBusNumber(busNumber);
+        if (savedBus != null) {
+            throw new BusAlreadyRegisteredException(busNumber);
+        }
+    }
+
+    private void verifyIfExistsBusName(String name) throws BusAlreadyRegisteredException {
+        Bus savedBus = busRepository.findByName(name);
+        if (savedBus != null) {
+            throw new BusAlreadyRegisteredException(name);
+        }
     }
 }

@@ -1,6 +1,7 @@
 package br.com.muriel.busIOT.rest.service;
 
 import br.com.muriel.busIOT.rest.dto.BusStopDTO;
+import br.com.muriel.busIOT.rest.exception.bus.BusAlreadyRegisteredException;
 import br.com.muriel.busIOT.rest.exception.busStop.NotFoundBusStopNext;
 import br.com.muriel.busIOT.rest.exception.busStop.BusStopAlreadyRegisteredException;
 import br.com.muriel.busIOT.rest.exception.busStop.BusStopNotFoundException;
@@ -27,6 +28,7 @@ public class BusStopService {
 
     public BusStop save(BusStopDTO dto) throws BusStopAlreadyRegisteredException {
         verifyIfIsAlreadyRegistered(dto.getName());
+        verifyIfExistsBusStopLatLong(dto.getLatitude(),dto.getLongitude());
         BusStop busStop = new BusStop();
         busStop.setName(dto.getName());
         busStop.setDirection(dto.getDirection());
@@ -60,6 +62,9 @@ public class BusStopService {
                 Map<Long, Double> busStops = backDistance(id);
                 mapCheckBus.put(obj.getBus_id(), busStops.get(obj.getBusStop_id()));
             }
+            if (mapCheckBus.containsKey(id) && mapCheckBus.containsValue(null)){
+                mapCheckBus.remove(id);
+            }
             return mapCheckBus;
         }
         return mapCheckBus;
@@ -89,6 +94,13 @@ public class BusStopService {
 
     public List<BusStop> findAllBusStop() {
         return busStopRepository.findAll();
+    }
+
+    private void verifyIfExistsBusStopLatLong(double latitude, double longitude) throws BusStopAlreadyRegisteredException {
+        BusStop savedBusStop = busStopRepository.findByLatitudeAndLongitude(latitude,longitude);
+        if (savedBusStop != null) {
+            throw new BusStopAlreadyRegisteredException(latitude,longitude);
+        }
     }
 
 }

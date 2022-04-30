@@ -9,9 +9,7 @@ import java.util.List;
 
 public interface BusStopRepository extends JpaRepository<BusStop,Long> {
 
-
-
-    List<BusStop> findByLatitudeAndLongitude(BigDecimal lat, BigDecimal lon);
+    BusStop findByLatitudeAndLongitude(double lat, double lon);
 
     BusStop findByName(String name);
 }

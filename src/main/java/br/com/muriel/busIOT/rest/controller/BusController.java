@@ -19,7 +19,6 @@ public class BusController {
     @Autowired
     private BusService busService;
 
-
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Criar um buzão!")

@@ -25,7 +25,7 @@ public class Bus {
     private String name;
 
     @Column
-    private int busNumber;
+    private Integer busNumber;
 
     @Column
     private String route;
