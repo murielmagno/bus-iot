@@ -2,6 +2,7 @@ package br.com.muriel.busIOT.rest.service;
 
 import br.com.muriel.busIOT.rest.dto.BusStopDTO;
 import br.com.muriel.busIOT.rest.exception.bus.BusAlreadyRegisteredException;
+import br.com.muriel.busIOT.rest.exception.bus.BusNotFoundException;
 import br.com.muriel.busIOT.rest.exception.busStop.NotFoundBusStopNext;
 import br.com.muriel.busIOT.rest.exception.busStop.BusStopAlreadyRegisteredException;
 import br.com.muriel.busIOT.rest.exception.busStop.BusStopNotFoundException;
@@ -54,13 +55,15 @@ public class BusStopService {
                 .orElseThrow(() -> new BusStopNotFoundException(id));
     }
 
-    public Map<Long, Double> nextBus(Long id) throws BusStopNotFoundException, NotFoundBusStopNext {
+    public Map<String, Double> nextBus(Long id) throws BusStopNotFoundException, NotFoundBusStopNext, BusNotFoundException {
         List<CheckBusStop> listBusCheck = checkBusStopService.nextBusInCheck();
-        Map<Long, Double> mapCheckBus = new HashMap<>();
+        Map<String, Double> mapCheckBus = new HashMap<>();
+        Bus bus = new Bus();
         if (listBusCheck != null && !listBusCheck.isEmpty()) {
             for (CheckBusStop obj : listBusCheck) {
                 Map<Long, Double> busStops = backDistance(id);
-                mapCheckBus.put(obj.getBus_id(), busStops.get(obj.getBusStop_id()));
+                bus = busService.getById(obj.getId());
+                mapCheckBus.put(bus.getName(), busStops.get(obj.getBusStop_id()));
             }
             if (mapCheckBus.containsKey(id) && mapCheckBus.containsValue(null)){
                 mapCheckBus.remove(id);
