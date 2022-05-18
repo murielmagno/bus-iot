@@ -110,7 +110,7 @@ public class BusStopService {
        try {
            busStopRepository.deleteById(id);
        }catch (Exception e){
-           e.getMessage();
+           e.getStackTrace();
        }
     }
 

@@ -53,4 +53,12 @@ public class BusService {
             throw new BusAlreadyRegisteredException(name);
         }
     }
+
+    public void deleteById(Long id){
+        try {
+            busRepository.deleteById(id);
+        }catch (Exception e){
+            e.getStackTrace();
+        }
+    }
 }
