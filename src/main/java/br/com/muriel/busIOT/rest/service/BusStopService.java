@@ -106,4 +106,12 @@ public class BusStopService {
         }
     }
 
+    public void deleteById(Long id){
+       try {
+           busStopRepository.deleteById(id);
+       }catch (Exception e){
+           e.getMessage();
+       }
+    }
+
 }

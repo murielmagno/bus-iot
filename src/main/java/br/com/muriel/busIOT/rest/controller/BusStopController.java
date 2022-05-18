@@ -53,4 +53,10 @@ public class BusStopController {
         return ResponseEntity.status(200).body(busStopService.findAllBusStop());
     }
 
+    @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Deletar paradas")
+    public void delete(@PathVariable("id") Long id){
+        busStopService.deleteById(id);
+    }
 }
