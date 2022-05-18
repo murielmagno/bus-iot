@@ -32,7 +32,7 @@ public class BusController {
         return ResponseEntity.status(200).body((busService.getById(id)));
     }
 
-    @DeleteMapping("{id")
+    @DeleteMapping("{id}")
     @Operation(summary = "Delete onibus")
     public void delete(@PathVariable("id") Long id){
         busService.deleteById(id);
