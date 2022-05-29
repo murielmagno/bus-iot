@@ -1,6 +1,5 @@
-FROM adoptopenjdk/openjdk11:alpine-jre
+FROM azul/zulu-openjdk-alpine:11
 ENV TZ=America/Sao_Paulo
-#ENV JAVA_VERSION jdk-11.0.11+9
 RUN addgroup -S spring && adduser -S spring -G spring
 USER spring:spring
 ARG JAR_FILE=target/*.jar
