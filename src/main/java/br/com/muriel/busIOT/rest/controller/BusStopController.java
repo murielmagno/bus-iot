@@ -41,7 +41,7 @@ public class BusStopController {
     @GetMapping("/nextBuses/{id}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Buscar paradas proximas")
-    public ResponseEntity<Map<String,Double>> nextBuses(@PathVariable("id") Long id) throws BusStopNotFoundException, NotFoundBusStopNext, BusNotFoundException {
+    public ResponseEntity<Map<String,Integer>> nextBuses(@PathVariable("id") Long id) throws BusStopNotFoundException, NotFoundBusStopNext, BusNotFoundException {
         return ResponseEntity.status(200).body(busStopService.nextBus(id));
     }
 
