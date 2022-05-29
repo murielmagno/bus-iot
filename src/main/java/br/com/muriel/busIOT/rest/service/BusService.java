@@ -54,6 +54,10 @@ public class BusService {
         }
     }
 
+    public List<Bus> findAllBus(){
+        return busRepository.findAll();
+    }
+
     public void deleteById(Long id){
         try {
             busRepository.deleteById(id);
