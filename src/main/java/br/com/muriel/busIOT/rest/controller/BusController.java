@@ -31,6 +31,7 @@ public class BusController {
     }
 
     @GetMapping("{id}")
+    @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Buscar onibus pelo id")
     public ResponseEntity<Bus> getById(@PathVariable("id") Long id) throws BusNotFoundException {
         return ResponseEntity.status(200).body((busService.getById(id)));
@@ -45,6 +46,7 @@ public class BusController {
     }
 
     @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Delete onibus")
     public void delete(@PathVariable("id") Long id){
         busService.deleteById(id);
