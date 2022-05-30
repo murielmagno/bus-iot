@@ -29,7 +29,7 @@ public class BusStopService {
 
     public BusStop save(BusStopDTO dto) throws BusStopAlreadyRegisteredException {
         verifyIfIsAlreadyRegistered(dto.getName());
-        verifyIfExistsBusStopLatLong(dto.getLatitude(),dto.getLongitude());
+        verifyIfExistsBusStopLatLong(dto.getLatitude(), dto.getLongitude());
         BusStop busStop = new BusStop();
         busStop.setName(dto.getName());
         busStop.setDirection(dto.getDirection());
@@ -65,7 +65,7 @@ public class BusStopService {
                 bus = busService.getById(obj.getId());
                 mapCheckBus.put(bus.getName(), busStops.get(obj.getBusStop_id()));
             }
-            if (mapCheckBus.containsKey(id) && mapCheckBus.containsValue(null)){
+            if (mapCheckBus.containsKey(id) && mapCheckBus.containsValue(null)) {
                 mapCheckBus.remove(id);
             }
             return mapCheckBus;
@@ -86,7 +86,7 @@ public class BusStopService {
                         busStop.getDirection() == obj.getDirection()) {
                     distancia = Math.sqrt(
                             (Math.pow(obj.getLatitude() - busStop.getLatitude(), 2)) + (Math.pow(obj.getLongitude() - busStop.getLongitude(), 2)));
-                    minutos = (int) ((distancia/60)*100);
+                    minutos = (int) ((distancia / 60) * 100);
                     map.put(obj.getId(), minutos);
                 } else {
                     continue;
@@ -102,18 +102,18 @@ public class BusStopService {
     }
 
     private void verifyIfExistsBusStopLatLong(double latitude, double longitude) throws BusStopAlreadyRegisteredException {
-        BusStop savedBusStop = busStopRepository.findByLatitudeAndLongitude(latitude,longitude);
+        BusStop savedBusStop = busStopRepository.findByLatitudeAndLongitude(latitude, longitude);
         if (savedBusStop != null) {
-            throw new BusStopAlreadyRegisteredException(latitude,longitude);
+            throw new BusStopAlreadyRegisteredException(latitude, longitude);
         }
     }
 
-    public void deleteById(Long id){
-       try {
-           busStopRepository.deleteById(id);
-       }catch (Exception e){
-           e.getStackTrace();
-       }
+    public void deleteById(Long id) {
+        try {
+            busStopRepository.deleteById(id);
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
     }
 
 }
