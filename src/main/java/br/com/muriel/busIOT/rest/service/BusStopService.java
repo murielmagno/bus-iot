@@ -55,13 +55,13 @@ public class BusStopService {
                 .orElseThrow(() -> new BusStopNotFoundException(id));
     }
 
-    public Map<String, Integer> nextBus(Long id) throws BusStopNotFoundException, NotFoundBusStopNext, BusNotFoundException {
+    public Map<String, Double> nextBus(Long id) throws BusStopNotFoundException, NotFoundBusStopNext, BusNotFoundException {
         List<CheckBusStop> listBusCheck = checkBusStopService.nextBusInCheck();
-        Map<String, Integer> mapCheckBus = new HashMap<>();
+        Map<String, Double> mapCheckBus = new HashMap<>();
         Bus bus = new Bus();
         if (listBusCheck != null && !listBusCheck.isEmpty()) {
             for (CheckBusStop obj : listBusCheck) {
-                Map<Long, Integer> busStops = backDistance(id);
+                Map<Long, Double> busStops = backDistance(id);
                 bus = busService.getById(obj.getId());
                 mapCheckBus.put(bus.getName(), busStops.get(obj.getBusStop_id()));
             }
@@ -73,12 +73,12 @@ public class BusStopService {
         return mapCheckBus;
     }
 
-    private Map<Long, Integer> backDistance(Long id) throws BusStopNotFoundException {
+    private Map<Long, Double> backDistance(Long id) throws BusStopNotFoundException {
         BusStop busStop = busStopRepository.findById(id).orElseThrow(() -> new BusStopNotFoundException(id));
         List<BusStop> listBusStop = busStopRepository.findAll();
-        Map<Long, Integer> map = new HashMap<>();
+        Map<Long, Double> map = new HashMap<>();
         double distancia;
-        int minutos;
+        double minutos;
         if (listBusStop != null && !listBusStop.isEmpty()) {
             for (BusStop obj : listBusStop) {
                 if (obj.getId() < busStop.getId() &&
@@ -86,7 +86,7 @@ public class BusStopService {
                         busStop.getDirection() == obj.getDirection()) {
                     distancia = Math.sqrt(
                             (Math.pow(obj.getLatitude() - busStop.getLatitude(), 2)) + (Math.pow(obj.getLongitude() - busStop.getLongitude(), 2)));
-                    minutos = (int) ((distancia / 60) * 100);
+                    minutos = ((distancia / 60) * 100);
                     map.put(obj.getId(), minutos);
                 } else {
                     continue;
