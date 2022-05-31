@@ -78,6 +78,7 @@ public class BusStopService {
         List<BusStop> listBusStop = busStopRepository.findAll();
         Map<Long, Double> map = new HashMap<>();
         double distancia;
+        double segundos;
         double minutos;
         if (listBusStop != null && !listBusStop.isEmpty()) {
             for (BusStop obj : listBusStop) {
@@ -85,8 +86,10 @@ public class BusStopService {
                         obj.getId() != busStop.getId() &&
                         busStop.getDirection() == obj.getDirection()) {
                     distancia = Math.sqrt(
-                            (Math.pow(obj.getLatitude() - busStop.getLatitude(), 2)) + (Math.pow(obj.getLongitude() - busStop.getLongitude(), 2)));
-                    minutos = ((distancia / 60) * 100);
+                            (Math.pow(obj.getLatitude() - busStop.getLatitude(), 2)) +
+                                    (Math.pow(obj.getLongitude() - busStop.getLongitude(), 2)));
+                    segundos = (((distancia * 1000 )/ 60));
+                    minutos = (segundos / 60) * 100;
                     map.put(obj.getId(), minutos);
                 } else {
                     continue;
